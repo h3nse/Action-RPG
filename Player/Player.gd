@@ -53,7 +53,7 @@ func move_state(delta):
 		animationTree.set("parameters/Attack/blend_position", input_vector)
 		#Play run animation from animation tree, uses the blend position for the right animation direction
 		animationState.travel("Run")
-		#???
+		#Set the velocity vector by where the player is going and how fast they're doing it
 		velocity = velocity.move_toward(input_vector * max_speed, acceleration * delta)
 	else:
 		#Sets animation and velocity to idle if not moving
