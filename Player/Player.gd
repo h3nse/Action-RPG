@@ -12,7 +12,6 @@ enum {
 	ATTACK
 }
 
-
 #set loaded state to MOVE and create velocity variable
 var state = MOVE
 var velocity = Vector2.ZERO
@@ -26,7 +25,7 @@ onready var animationState = animationTree.get("parameters/playback")
 func _ready():
 	animationTree.active = true
 
-func _process(delta):
+func _physics_process(delta):
 	#Identify which state we're in and run appropriate method
 	match state:
 		MOVE:
@@ -34,7 +33,7 @@ func _process(delta):
 		ROLL:
 			pass
 		ATTACK:
-			attack_state(delta)
+			attack_state()
 	
 
 func move_state(delta):
@@ -68,11 +67,15 @@ func move_state(delta):
 	if Input.is_action_just_pressed("attack"):
 		state = ATTACK
 
-func attack_state(delta):
+func attack_state():
 	#Stop movement and play animation
 	velocity = Vector2.ZERO
 	animationState.travel("Attack")
 
+func roll_animation_finished():
+	state = MOVE
+
 func attack_animation_finished():
 	#Switch to MOVE state after finishing attack animation, is called directly from AnimationPlayer
 	state = MOVE
+
