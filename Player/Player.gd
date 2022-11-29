@@ -12,6 +12,7 @@ enum {
 	ATTACK
 }
 
+
 #set loaded state to MOVE and create velocity variable
 var state = MOVE
 var velocity = Vector2.ZERO
