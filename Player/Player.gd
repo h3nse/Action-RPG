@@ -17,15 +17,18 @@ enum {
 var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
+var stats = PlayerStats
 
 #Load variables for nodes when ready
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var swordHitbox = $HitboxPivot/SwordHitbox
+onready var hurtbox = $Hurtbox
 	#animation tree's root:
 onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
+	stats.connect("no_health", self, "queue_free")
 	#Activate animation tree
 	animationTree.active = true
 
@@ -102,3 +105,7 @@ func attack_animation_finished():
 	#Switch to MOVE state after finishing attack animation, is called directly from AnimationPlayer
 	state = MOVE
 
+func _on_Hurtbox_area_entered(area):
+	stats.health -= 1
+	hurtbox.start_invincibility(0.5)
+	hurtbox.create_hit_effect()

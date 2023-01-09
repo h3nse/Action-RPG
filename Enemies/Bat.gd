@@ -25,6 +25,7 @@ var state = IDLE
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var sprite = $AnimatedSprite
+onready var hurtbox = $Hurtbox
 
 func _physics_process(delta):
 	#Always moves knockback towards zero(friction)
@@ -71,6 +72,7 @@ func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
 	#Set knockback by direction and multiplier
 	knockback = area.knockback_vector * 100
+	hurtbox.create_hit_effect()
 
 
 func _on_Stats_no_health():
